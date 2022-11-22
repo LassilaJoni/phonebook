@@ -1,4 +1,4 @@
-    const Persons = ({person, personsToShow})=>{
+    const Persons = ({persons, personsToShow})=>{
       return(
         
         <div>

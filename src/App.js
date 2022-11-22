@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import AddPersonsForm from './components/PersonForm'
 import ShowPersons from './components/Persons'
+import axios from "axios";
 
 const App = (props) => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
-  ]) 
+  const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [showFilter, setFilter] = useState('')
@@ -21,13 +20,28 @@ const App = (props) => {
 
 
 
+
+
     const alreadyAdded = persons.find(person => person.name.toUpperCase() === newName.toUpperCase())
     alreadyAdded ? alert(`${newName} is already added to phonebook`)
 
     : setPersons(persons.concat(nameObject))
     setNewName('')
     setNewNumber('')
+
+    
   }
+
+  useEffect(() => {
+    fetch('http://localhost:3001/persons')
+      .then((res) => res.json())
+      .then((resJson) => {
+        const data = resJson
+        setPersons(data)
+    })
+  }, [])
+
+ 
 
   const showAll = () => {
     return persons
